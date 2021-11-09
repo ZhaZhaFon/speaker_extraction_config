@@ -1,8 +1,9 @@
-function simulate_2spk_mix(data_type, wsj0root, output_dir, fs8k, min_max)
+function simulate_2spk_extr_mix(data_type, wsj0root, output_dir, fs8k, min_max)
 % Simulate 2-speaker mixture data for speaker extraction.
 % Call:
 %     simulate_2spk_mix(data_type, wsj0root, output_dir, fs8k, min_max)
 %     e.g., simulate_2spk_mix('tt', '/media/clx214/data/wsj/', '/media/clx214/data/wsj0_2mix_extr_tmp/wav8k', 8000, 'max')
+%     e.g., simulate_2spk_extr_mix('tt', '/home/zzf/corpus/wall_street_journal/wsj0/', '/home/zzf/corpus/wall_street_journal/wsj0_8k_extr/', 8000, 'min')
 % Paras:
 %     data_type: data set to generate, (tr|cv|tt), e.g., 'tt'
 %     wsj0root: YOUR_PATH/, the folder containing converted wsj0/, e.g., '/media/clx214/data/wsj/'
@@ -50,19 +51,19 @@ mkdir([output_dir  '/' min_max '/' data_type '/s1/']);
 mkdir([output_dir  '/' min_max '/' data_type '/aux/']);
 mkdir([output_dir  '/' min_max '/' data_type '/mix/']);
 
-TaskFile = ['mix_2_spk_' data_type '_extr.txt'];
+TaskFile = ['mix_2_spk_' data_type '_extr.txt']; % simulation/mix_2_spk_{}_extr.txt
 fid = fopen(TaskFile,'r');
-C = textscan(fid,'%s %f %s %f %s');
+C = textscan(fid,'%s %f %s %f %s'); % s1 snr1 s2 snr2 aux
 num_files = length(C{1});
 
 fprintf(1,'Start to generate data for %s\n', [min_max '_' data_type]);
 for i = 1:num_files
-    [inwav1_dir,invwav1_name,inwav1_ext] = fileparts(C{1}{i});
-    [inwav2_dir,invwav2_name,inwav2_ext] = fileparts(C{3}{i});
-    [inwav_aux_dir,invwav_aux_name,inwav_aux_ext] = fileparts(C{5}{i});
+    [inwav1_dir,invwav1_name,inwav1_ext] = fileparts(C{1}{i}); % 1st column
+    [inwav2_dir,invwav2_name,inwav2_ext] = fileparts(C{3}{i}); % 3rd column
+    [inwav_aux_dir,invwav_aux_name,inwav_aux_ext] = fileparts(C{5}{i}); % 5th column
     
-    inwav1_snr = C{2}(i);
-    inwav2_snr = C{4}(i);
+    inwav1_snr = C{2}(i); % 2nd column
+    inwav2_snr = C{4}(i); % 4th column
     mix_name = [invwav1_name,'_',num2str(inwav1_snr),'_',invwav2_name,'_',num2str(inwav2_snr),'_',invwav_aux_name];
     
     % get input wavs
