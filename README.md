@@ -1,5 +1,8 @@
 # Target Speaker Extraction and Verification for Multi-talker Speech
 
+## 使用
+使用simulation/下相关脚本，基于WSJ0生成wsj0-2mix-extr数据集。在[Chenglin Xu's repo](https://github.com/xuchenglin28/speaker_extraction)基础上进行了一些修正，并将MERL脚本相关依赖加入
+
 The codes here are speaker extraction, where only target speaker's voice will be extracted given this target speaker's characteristics. In paper 2), we use a small network to jointly learn target speaker's characteristics from a different utterance of target speaker. You also can replace the network by using i-vector, or x-vector network.
 
 If you are interested in speech separation to get all the speaker's voices in the mixture, please move to https://github.com/xuchenglin28/speech_separation

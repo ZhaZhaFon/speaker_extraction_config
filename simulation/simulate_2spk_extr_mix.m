@@ -67,9 +67,13 @@ for i = 1:num_files
     mix_name = [invwav1_name,'_',num2str(inwav1_snr),'_',invwav2_name,'_',num2str(inwav2_snr),'_',invwav_aux_name];
     
     % get input wavs
-    [s1, fs] = audioread([wsj0root C{1}{i}]);
-    s2       = audioread([wsj0root C{3}{i}]);
-    s_aux    = audioread([wsj0root C{5}{i}]);
+    [wsj0root inwav1_dir invwav1_name '.wav']
+    %[s1, fs] = audioread([wsj0root C{1}{i}]);
+    [s1, fs] = audioread([wsj0root inwav1_dir '/' invwav1_name '.wav']);
+    %s2       = audioread([wsj0root C{3}{i}]);
+    [s2, fs] = audioread([wsj0root inwav2_dir '/' invwav2_name '.wav']);
+    %s_aux    = audioread([wsj0root C{5}{i}]);
+    [s_aux, fs] = audioread([wsj0root inwav_aux_dir '/' invwav_aux_name '.wav']);
     
     % resample, normalize to 8 kHz file
     s1_8k = resample(s1,fs8k,fs);
